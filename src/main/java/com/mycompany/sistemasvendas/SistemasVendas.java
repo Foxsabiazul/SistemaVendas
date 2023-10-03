@@ -4,13 +4,14 @@
 
 package com.mycompany.sistemasvendas;
 
+import com.my.companyferramentas.BancoDeDadosMysql;
+
 /**
  *
  * @author rosa.3950
  */
 public class SistemasVendas {
-
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        BancoDeDadosMysql.conectar();
     }
 }
