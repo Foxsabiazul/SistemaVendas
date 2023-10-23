@@ -4,7 +4,7 @@
 
 package com.mycompany.sistemasvendas;
 
-import com.my.companyferramentas.BancoDeDadosMysql;
+import com.my.companyferramentas.BancoDeDadosMySql;
 
 /**
  *
@@ -12,6 +12,6 @@ import com.my.companyferramentas.BancoDeDadosMysql;
  */
 public class SistemasVendas {
     public static void main(String[] args) {
-        BancoDeDadosMysql.conectar();
+        BancoDeDadosMySql.conectar();
     }
 }

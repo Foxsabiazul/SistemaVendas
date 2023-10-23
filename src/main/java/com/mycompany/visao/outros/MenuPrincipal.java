@@ -4,6 +4,12 @@
  */
 package com.mycompany.visao.outros;
 
+import com.my.companyferramentas.BancoDeDadosMySql;
+import com.my.companyferramentas.Formularios;
+import com.mycompany.visao.categoria.CadCategoria;
+import com.mycompany.visao.categoria.ListCategoria;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author rosa.3950
@@ -15,6 +21,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
+        
+        setLocationRelativeTo(null);
+        
+        setExtendedState(MAXIMIZED_BOTH);
+        
+        if (!BancoDeDadosMySql.conectar()){
+            JOptionPane.showMessageDialog(null, "Não foi possível conectar ao banco de dados. O sistema será finalizado.");
+            System.exit(0);
+        }
     }
 
     /**
@@ -28,32 +43,33 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        miCadastroCategoria = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        miConsultaCategoria = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenu1.setText("Categorias");
+        jMenu1.setText("Cadastros");
 
-        jMenuItem1.setText("Categoria");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        miCadastroCategoria.setText("Categoria");
+        miCadastroCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                miCadastroCategoriaActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(miCadastroCategoria);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Consultas");
 
-        jMenuItem2.setText("Consultas");
-        jMenu2.add(jMenuItem2);
-
-        jMenuItem3.setText("jMenuItem3");
-        jMenu2.add(jMenuItem3);
+        miConsultaCategoria.setText("Categoria");
+        miConsultaCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConsultaCategoriaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miConsultaCategoria);
 
         jMenuBar1.add(jMenu2);
 
@@ -73,9 +89,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void miCadastroCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCadastroCategoriaActionPerformed
+        if (Formularios.cadCategoria == null)
+            Formularios.cadCategoria = new CadCategoria();
+        
+        Formularios.cadCategoria.setVisible(true);
+    }//GEN-LAST:event_miCadastroCategoriaActionPerformed
+
+    private void miConsultaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConsultaCategoriaActionPerformed
+        if (Formularios.listCategoria == null)
+            Formularios.listCategoria = new ListCategoria();
+        
+        Formularios.listCategoria.setVisible(true);
+    }//GEN-LAST:event_miConsultaCategoriaActionPerformed
       
     /**
      * @param args the command line arguments
@@ -116,8 +142,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem miCadastroCategoria;
+    private javax.swing.JMenuItem miConsultaCategoria;
     // End of variables declaration//GEN-END:variables
 }

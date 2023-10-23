@@ -16,23 +16,23 @@ import java.sql.SQLException;
  *
  * @author rosa.3950
  */
-public class BancoDeDadosMysql {
+public class BancoDeDadosMySql {
    // Configurações do banco de dados
-    private static final String URL =
-            "jdbc:mysql://localhost:3306/banco_de_dados_teste?useSSL=false&allowPublicKeyRetrieval=true";
+    private static final String URL = 
+        "jdbc:mysql://localhost:3306/banco_de_dados_teste?useSSL="
+      + "false&allowPublicKeyRetrieval=true";
+    
     private static final String USUARIO = "root";
     private static final String SENHA = "admin";
     
     private static Connection conexao = null;
     private static PreparedStatement statement = null;
-    private static ResultSet resultado = null;   
-    
-    public static Connection obterConexao(){
+    private static ResultSet resultado = null;
+
+    public static Connection obterConexao() {
         conexao = null;
-        
         try {
-            
-            //Carrega o driver JDBC
+            // Carrega o driver JDBC
             Class.forName("com.mysql.cj.jdbc.Driver");
             
             // Obtém a conexão com o banco de dados
@@ -51,17 +51,16 @@ public class BancoDeDadosMysql {
                 conexao.close();
             } catch (SQLException e) {
                 System.err.println("Erro ao fechar a conexão com o banco de dados: " + e.getMessage());
-           
             }
         }
     }
-            
-   public static boolean conectar(){
-    setConexao(BancoDeDadosMysql.obterConexao());
     
-    if(getConexao() != null){
-        System.out.println("Conexao com o banco de dados estabelecida");
-      return true;
+    public static boolean conectar(){
+        setConexao(BancoDeDadosMySql.obterConexao());
+        
+        if (getConexao() != null){
+            System.out.println("Conexão com o banco de dados estabelecida.");
+            return true;
         }else{
             return false;
         }
@@ -72,22 +71,23 @@ public class BancoDeDadosMysql {
     }
 
     public static void setConexao(Connection conexao) {
-        BancoDeDadosMysql.conexao = conexao;
+        BancoDeDadosMySql.conexao = conexao;
     }
 
     public static PreparedStatement getStatement() {
         return statement;
-    }    
-    public static void setStatement(PreparedStatement statement){
-        BancoDeDadosMysql.statement = statement;
     }
-      
+
+    public static void setStatement(PreparedStatement statement) {
+        BancoDeDadosMySql.statement = statement;
+    }
+
     public static ResultSet getResultado() {
         return resultado;
     }
 
-    public static void setResultado(ResultSet resultado){
-        BancoDeDadosMysql.resultado = resultado;        
+    public static void setResultado(ResultSet resultado) {
+        BancoDeDadosMySql.resultado = resultado;
     }
 }           
         

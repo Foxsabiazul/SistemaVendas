@@ -4,23 +4,20 @@
  */
 package com.mycompany.visao.categoria;
 
-import com.my.companydao.DaoCategoria;
-import com.mysql.cj.xdevapi.Table;
+import com.my.companyferramentas.DadosTemporarios;
+import com.my.companymodelo.ModCategoria;
+import com.mycompanydao.DaoCategoria;
 import java.sql.ResultSet;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.TableView;
 
 /**
  *
  * @author rosa.3950
  */
-public class ListCategoria extends javax.swing.JFrame{
+public class ListCategoria extends javax.swing.JFrame {
 
     /**
-     * Creates new form ListCategoria
+     * Creates new form ListCategoria1
      */
     public ListCategoria() {
         initComponents();
@@ -28,68 +25,66 @@ public class ListCategoria extends javax.swing.JFrame{
         setLocationRelativeTo(null);
         
         listarTodos();
-    }
-
+        
+    }    
     public void listarTodos(){
         try{
-            //Pega o model da tabela definido no design
             DefaultTableModel defaultTableModel = (DefaultTableModel) tableCategoria.getModel();
-            
             tableCategoria.setModel(defaultTableModel);
-
             DaoCategoria daoCategoria = new DaoCategoria();
-
-            //Atribui o resultset retornado a uma variável para ser usada.
-            ResultSet resultSet = daoCategoria.listarTodos();
             
+            ResultSet resultSet = daoCategoria.listarTodos();
             defaultTableModel.setRowCount(0);
-            while (resultSet.next()){
+        while (resultSet.next()){
                 String id = resultSet.getString(1);
                 String nome = resultSet.getString(2);
                 String descricao = resultSet.getString(3);
-                
                 defaultTableModel.addRow(new Object[]{id, nome, descricao});
             }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        }catch (Exception e ){
+                 System.out.println(e.getMessage());
     }
-    
+    }
     public void listarPorId(int pId){
         try{
             //Define o model da tabela.
-            DefaultTableModel defaultTableModel = (DefaultTableModel) tableCategoria.getModel();
+            DefaultTableModel defaultTableModel = new DefaultTableModel();
 
+            defaultTableModel.addColumn("ID");
+            defaultTableModel.addColumn("NOME");
+            defaultTableModel.addColumn("DESCRIÇÃO");
+            
             tableCategoria.setModel(defaultTableModel);
 
             DaoCategoria daoCategoria = new DaoCategoria();
 
-            //Atribui o resultset retornado a uma variável para ser usada.
+          
             ResultSet resultSet = daoCategoria.listarPorId(pId);
             
             defaultTableModel.setRowCount(0);
-            while (resultSet.next()){
+        while (resultSet.next()){
                 String id = resultSet.getString(1);
                 String nome = resultSet.getString(2);
                 String descricao = resultSet.getString(3);
-                
-                defaultTableModel.addRow(new Object[]{id, nome, descricao});
-            }
+             defaultTableModel.addRow(new Object[]{id, nome, descricao});
+    }
         }catch(Exception e){
             System.out.println(e.getMessage());
-        }
     }
-    
-    public void listarPorNome(String pNome){
+    }
+         public void listarPorNome(String pNome){
         try{
             //Define o model da tabela.
-            DefaultTableModel defaultTableModel = (DefaultTableModel) tableCategoria.getModel();
+            DefaultTableModel defaultTableModel = new DefaultTableModel();
+
+            defaultTableModel.addColumn("ID");
+            defaultTableModel.addColumn("NOME");
+            defaultTableModel.addColumn("DESCRIÇÃO");
             
             tableCategoria.setModel(defaultTableModel);
 
             DaoCategoria daoCategoria = new DaoCategoria();
 
-            //Atribui o resultset retornado a uma variável para ser usada.
             ResultSet resultSet = daoCategoria.listarPorNome(pNome);
             
             defaultTableModel.setRowCount(0);
@@ -104,17 +99,21 @@ public class ListCategoria extends javax.swing.JFrame{
             System.out.println(e.getMessage());
         }
     }
-    
+          
     public void listarPorDescricao(String pDescricao){
         try{
             //Define o model da tabela.
-            DefaultTableModel defaultTableModel = (DefaultTableModel) tableCategoria.getModel();
+            DefaultTableModel defaultTableModel = new DefaultTableModel();
+
+            defaultTableModel.addColumn("ID");
+            defaultTableModel.addColumn("NOME");
+            defaultTableModel.addColumn("DESCRIÇÃO");
             
             tableCategoria.setModel(defaultTableModel);
 
             DaoCategoria daoCategoria = new DaoCategoria();
 
-            //Atribui o resultset retornado a uma variável para ser usada.
+            
             ResultSet resultSet = daoCategoria.listarPorDescricao(pDescricao);
             
             defaultTableModel.setRowCount(0);
@@ -128,74 +127,47 @@ public class ListCategoria extends javax.swing.JFrame{
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
-    }
-    
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+    }      
+     
+         
+
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void initComponents() {
-
-   
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulta de categoria");
-
-        tableCategoria.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "NOME", "DESCRIÇÃO"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tableCategoria.setShowGrid(true);
-        tableCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
-            
-            
-        });
-        jScrollPane.setViewportView(tableCategoria);
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-        
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jcbTipoFiltro = new javax.swing.JComboBox<>();
+        asdfg = new javax.swing.JScrollPane();
         tableCategoria = new javax.swing.JTable();
         btnBuscar = new javax.swing.JButton();
-        jcbTipoFiltro = new javax.swing.JComboBox<>();
         tfFiltro = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulta de categoria");
+
+        jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Id", "Nome", "Descrição" }));
+        jcbTipoFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbTipoFiltroActionPerformed(evt);
+            }
+        });
+
+        asdfg.setBackground(new java.awt.Color(0, 0, 153));
+        asdfg.setAutoscrolls(true);
+        asdfg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asdfgMouseClicked(evt);
+            }
+        });
 
         tableCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "NOME", "DESCRIÇÃO"
+                " ID", "Nome", "Descrição"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -206,13 +178,12 @@ public class ListCategoria extends javax.swing.JFrame{
                 return canEdit [columnIndex];
             }
         });
-        tableCategoria.setShowGrid(true);
         tableCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableCategoriaMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tableCategoria);
+        asdfg.setViewportView(tableCategoria);
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -221,11 +192,6 @@ public class ListCategoria extends javax.swing.JFrame{
             }
         });
 
-        jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "ID", "NOME", "DESCRIÇÃO" }));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("Dê dois cliques no registro para editá-lo.");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -233,16 +199,16 @@ public class ListCategoria extends javax.swing.JFrame{
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jcbTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(tfFiltro))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 50, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBuscar)
+                            .addComponent(asdfg, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(44, 44, 44))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,36 +217,38 @@ public class ListCategoria extends javax.swing.JFrame{
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcbTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar)
-                    .addComponent(jLabel1))
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(asdfg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(btnBuscar)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void jcbTipoFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbTipoFiltroActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         switch (jcbTipoFiltro.getSelectedIndex()){
             case 0:
                 listarTodos();
@@ -297,6 +265,10 @@ public class ListCategoria extends javax.swing.JFrame{
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void asdfgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asdfgMouseClicked
+        
+    }//GEN-LAST:event_asdfgMouseClicked
+
     private void tableCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCategoriaMouseClicked
         if (evt.getClickCount() == 2){
             ModCategoria modCategoria = new ModCategoria();
@@ -309,149 +281,51 @@ public class ListCategoria extends javax.swing.JFrame{
 
             CadCategoria cadCategoria = new CadCategoria();
             cadCategoria.setVisible(true);
-            
-                }
+        }
     }//GEN-LAST:event_tableCategoriaMouseClicked
 
     /**
      * @param args the command line arguments
      */
-  
-                
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ListCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ListCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ListCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ListCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
 
-    // Variables declaration - do not modify                     
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ListCategoria().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane asdfg;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> jcbTipoFiltro;
     private javax.swing.JTable tableCategoria;
     private javax.swing.JTextField tfFiltro;
-    // End of variables declaration                   
-}                                  
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        jPanel1 = new javax.swing.JPanel();
-        jcbTipoFiltro = new javax.swing.JComboBox<>();
-        jScrollPane = new javax.swing.JScrollPane();
-        tableCategoria = new javax.swing.JTable();
-        btnAcao = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
-        jLabel = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jcbTipoFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos" }));
-
-        tableCategoria.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "ID", "Nome", "Descrição"
-            }
-        ));
-        tableCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableCategoriaMouseClicked(evt);
-            }
-        });
-        jScrollPane.setViewportView(tableCategoria);
-
-        btnAcao.setText("Salvar");
-
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jcbTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(61, 61, 61)
-                            .addComponent(btnAcao)
-                            .addGap(435, 435, 435)
-                            .addComponent(btnBuscar))))
-                .addContainerGap(117, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jcbTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAcao)
-                    .addComponent(btnBuscar))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(748, 748, 748)
-                .addComponent(jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 1334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 143, Short.MAX_VALUE))
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-   
-    
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAcao;
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JLabel jLabel;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane;
-    private javax.swing.JComboBox<String> jcbTipoFiltro;
-    private javax.swing.JTable tableCategoria;
     // End of variables declaration//GEN-END:variables
 }

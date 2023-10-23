@@ -2,17 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.my.companydao;
+package com.mycompanydao;
 
-import com.my.companyferramentas.BancoDeDadosMysql;
+import com.my.companyferramentas.BancoDeDadosMySql;
 import java.sql.ResultSet;
 
 /**
  *
  * @author rosa.3950
  */
-public class DaoCategoria extends BancoDeDadosMysql{
-     private String sql; 
+public class DaoCategoria extends BancoDeDadosMySql{
+    private String sql; 
     
     public Boolean inserir(int id, String nome, String descricao){
         try{
@@ -23,6 +23,42 @@ public class DaoCategoria extends BancoDeDadosMysql{
             getStatement().setInt(1, id);
             getStatement().setString(2, nome);
             getStatement().setString(3, descricao);
+            
+            getStatement().executeUpdate();
+            
+            return true;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    
+    public Boolean alterar(int id, String novoNome, String novaDescricao){
+        try{
+            sql = "UPDATE CATEGORIA SET NOME = ?, DESCRICAO = ? WHERE ID = ?";
+            
+            setStatement(getConexao().prepareStatement(sql));
+            
+            getStatement().setInt(3, id);
+            getStatement().setString(1, novoNome);
+            getStatement().setString(2, novaDescricao);
+            
+            getStatement().executeUpdate();
+            
+            return true;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    
+    public Boolean excluir(int id){
+        try{
+            sql = "DELETE FROM CATEGORIA WHERE ID = ?";
+            
+            setStatement(getConexao().prepareStatement(sql));
+            
+            getStatement().setInt(1, id);
             
             getStatement().executeUpdate();
             
@@ -96,10 +132,10 @@ public class DaoCategoria extends BancoDeDadosMysql{
     }
     
     public int buscarProximoId(){
-        int id = -1;
+        int id = 0;
         
         try{
-            sql = "SELECT MAX(ID) + 1 FROM CATEGORIA";
+            sql = "SELECT IFNULL(MAX(ID), 0) + 1 FROM CATEGORIA";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -114,5 +150,4 @@ public class DaoCategoria extends BancoDeDadosMysql{
         
         return id;
     }
-    
 }
