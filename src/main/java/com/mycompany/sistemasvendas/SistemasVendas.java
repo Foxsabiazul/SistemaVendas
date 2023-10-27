@@ -4,7 +4,7 @@
 
 package com.mycompany.sistemasvendas;
 
-import com.my.companyferramentas.BancoDeDadosMySql;
+import com.mycompany.ferramentas.BancoDeDadosMySql;
 
 /**
  *

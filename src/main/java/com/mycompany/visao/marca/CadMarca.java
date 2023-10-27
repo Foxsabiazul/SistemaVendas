@@ -2,32 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.visao.categoria;
+package com.mycompany.visao.marca;
+
+import com.mycompany.dao.DaoMarca;
 import com.mycompany.ferramentas.Constantes;
 import com.mycompany.ferramentas.DadosTemporarios;
 import com.mycompany.ferramentas.Formularios;
-import com.mycompany.modelo.ModCategoria;
-
-
-import com.mycompany.dao.DaoCategoria;
+import com.mycompany.modelo.ModMarca;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author rosa.3950
  */
-public class CadCategoria extends javax.swing.JFrame {
+public class CadMarca extends javax.swing.JFrame {
 
     /**
-     * Creates new form NewJFrame
+     * Creates new form CadMarca
      */
-    public CadCategoria() {
-         initComponents();
-         
-        if(!existeDadosTemporarios()){
-            DaoCategoria daoCategoria = new DaoCategoria();
+    public CadMarca() {
+        initComponents();
+    
+      if(!existeDadosTemporarios()){
+            DaoMarca daoMarca = new DaoMarca();
 
-            int id = daoCategoria.buscarProximoId(); 
-            if (id > 0)
+            int id = daoMarca.buscarProximoId(); 
+            if (id >= 0)
                 tfId.setText(String.valueOf(id));
             
             btnAcao.setText(Constantes.BTN_SALVAR_TEXT);
@@ -43,72 +43,54 @@ public class CadCategoria extends javax.swing.JFrame {
     }
     
      private Boolean existeDadosTemporarios(){        
-        if(DadosTemporarios.tempObject instanceof ModCategoria){
-            int id = ((ModCategoria) DadosTemporarios.tempObject).getId();
-            String nome = ((ModCategoria) DadosTemporarios.tempObject).getNome();
-            String descricao = ((ModCategoria) DadosTemporarios.tempObject).getDescricao();
+        if(DadosTemporarios.tempObject instanceof ModMarca){
+            int id = ((ModMarca) DadosTemporarios.tempObject).getId();
+            String nome = ((ModMarca) DadosTemporarios.tempObject).getNome();
             
             tfId.setText(String.valueOf(id));
             tfNome.setText(nome);
-            taDescricao.setText(descricao);
-        
+            
             DadosTemporarios.tempObject = null;
             
             return true;
         }else
             return false;
     }
-
-    private void inserir(){
-        DaoCategoria daoCategoria = new DaoCategoria();
-        
-        if (daoCategoria.inserir(Integer.parseInt(tfId.getText()), tfNome.getText(), taDescricao.getText())){
-            JOptionPane.showMessageDialog(null, "Categoria salva com sucesso!");
-            
-            tfId.setText(String.valueOf(daoCategoria.buscarProximoId()));
-            tfNome.setText("");
-            taDescricao.setText("");
-        }else{
-            JOptionPane.showMessageDialog(null, "Não foi possível salvar a categoria!");
-        }
-    }
     
     private void alterar(){
-        DaoCategoria daoCategoria = new DaoCategoria();
+        DaoMarca daoMarca = new DaoMarca();
         
-        if (daoCategoria.alterar(Integer.parseInt(tfId.getText()), tfNome.getText(), taDescricao.getText())){
-            JOptionPane.showMessageDialog(null, "Categoria alterada com sucesso!");
+        if (daoMarca.alterar(Integer.parseInt(tfId.getText()), tfNome.getText())){
+            JOptionPane.showMessageDialog(null, "Marca alterada com sucesso!");
             
             tfId.setText("");
             tfNome.setText("");
-            taDescricao.setText("");
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possível alterar a categoria!");
+            JOptionPane.showMessageDialog(null, "Não foi possível alterar a marca!");
         }
         
-        ((ListCategoria) Formularios.listCategoria).listarTodos();;
+       // ((ListMarca) Formularios.listMarca).listarTodos();
         
         dispose();
     }
     
     private void excluir(){
-        DaoCategoria daoCategoria = new DaoCategoria();
+        DaoMarca daoMarca = new DaoMarca();
         
-        if (daoCategoria.excluir(Integer.parseInt(tfId.getText()))){
-            JOptionPane.showMessageDialog(null, "Categoria " + tfNome.getText() + " excluída com sucesso!");
+        if (daoMarca.excluir(Integer.parseInt(tfId.getText()))){
+            JOptionPane.showMessageDialog(null, "Marca " + tfNome.getText() + " excluída com sucesso!");
             
             tfId.setText("");
             tfNome.setText("");
-            taDescricao.setText("");
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possível excluir a categoria!");
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir a marca!");
         }
         
-        ((ListCategoria) Formularios.listCategoria).listarTodos();
+       // ((ListMarca) Formularios.listMarca).listarTodos();
         
         dispose();
-    } 
-     
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -123,16 +105,26 @@ public class CadCategoria extends javax.swing.JFrame {
         tfId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         tfNome = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         btnAcao = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        taDescricao = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.setName("Cadastro de marca"); // NOI18N
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
             }
         });
 
@@ -146,61 +138,49 @@ public class CadCategoria extends javax.swing.JFrame {
 
         jLabel2.setText("Nome");
 
-        tfNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfNomeActionPerformed(evt);
+        btnAcao.setBackground(new java.awt.Color(0, 102, 51));
+        btnAcao.setForeground(new java.awt.Color(0, 0, 0));
+        btnAcao.setText("Salvar");
+        btnAcao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAcaoMouseClicked(evt);
             }
         });
-
-        jLabel3.setText("Descrição");
-
-        btnAcao.setText("Salvar");
         btnAcao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAcaoActionPerformed(evt);
             }
         });
 
+        btnExcluir.setBackground(new java.awt.Color(153, 0, 0));
+        btnExcluir.setForeground(new java.awt.Color(0, 0, 0));
         btnExcluir.setText("Excluir");
-        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirActionPerformed(evt);
-            }
-        });
-
-        taDescricao.setColumns(20);
-        taDescricao.setRows(5);
-        jScrollPane2.setViewportView(taDescricao);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfNome)
                     .addComponent(tfId)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAcao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 613, Short.MAX_VALUE)
-                        .addComponent(btnExcluir)))
+                    .addComponent(tfNome)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnAcao)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 394, Short.MAX_VALUE)
+                                    .addComponent(btnExcluir))))))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,22 +188,18 @@ public class CadCategoria extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAcao)
                     .addComponent(btnExcluir))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -240,42 +216,28 @@ public class CadCategoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdActionPerformed
-
+        // TODO add your handling code here:      
     }//GEN-LAST:event_tfIdActionPerformed
 
-    private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
-       
-    }//GEN-LAST:event_tfNomeActionPerformed
-
-    private void btnAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcaoActionPerformed
-        DaoCategoria daoCategoria = new DaoCategoria();
-        
-        if (btnAcao.getText() == Constantes.BTN_SALVAR_TEXT){
-            inserir();
-            
-            tfId.setText(String.valueOf(daoCategoria.buscarProximoId()));
-            tfNome.setText("");
-            taDescricao.setText("");
-        }
-        else if (btnAcao.getText() == Constantes.BTN_ALTERAR_TEXT){
-            alterar();
-            dispose();
-        }
-    }//GEN-LAST:event_btnAcaoActionPerformed
-
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int escolha = 
-                JOptionPane.showConfirmDialog(
-                        null, 
-                        "Deseja realmente excluir a categoria " + tfNome.getText() + "?");
-        
-        if(escolha == JOptionPane.YES_OPTION)
-            excluir();
-    }//GEN-LAST:event_btnExcluirActionPerformed
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formMouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        Formularios.cadCategoria = null;
+        // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
+
+    private void btnAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAcaoActionPerformed
+
+    private void btnAcaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcaoMouseClicked
+        
+    }//GEN-LAST:event_btnAcaoMouseClicked
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+       
+    }//GEN-LAST:event_jPanel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -294,23 +256,20 @@ public class CadCategoria extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadCategoria().setVisible(true);
+                new CadMarca().setVisible(true);
             }
         });
     }
@@ -320,10 +279,7 @@ public class CadCategoria extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea taDescricao;
     private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables

@@ -4,10 +4,12 @@
  */
 package com.mycompany.visao.outros;
 
-import com.my.companyferramentas.BancoDeDadosMySql;
-import com.my.companyferramentas.Formularios;
+import com.mycompany.ferramentas.BancoDeDadosMySql;
+import com.mycompany.ferramentas.Formularios;
 import com.mycompany.visao.categoria.CadCategoria;
 import com.mycompany.visao.categoria.ListCategoria;
+import com.mycompany.visao.pais.CadPais;
+import com.mycompany.visao.pais.ListPais;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,8 +46,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         miCadastroCategoria = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         miConsultaCategoria = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +63,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(miCadastroCategoria);
 
+        jMenuItem1.setText("Pais");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Consultas");
@@ -70,6 +82,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(miConsultaCategoria);
+
+        jMenuItem2.setText("Pais");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
 
         jMenuBar1.add(jMenu2);
 
@@ -102,6 +122,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
         
         Formularios.listCategoria.setVisible(true);
     }//GEN-LAST:event_miConsultaCategoriaActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        if (Formularios.cadPais == null)
+            Formularios.cadPais = new CadPais();
+        
+        Formularios.cadPais.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        if (Formularios.listPais == null)
+            Formularios.listPais = new ListPais();
+        
+        Formularios.listPais.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
       
     /**
      * @param args the command line arguments
@@ -142,6 +176,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem miCadastroCategoria;
     private javax.swing.JMenuItem miConsultaCategoria;
     // End of variables declaration//GEN-END:variables

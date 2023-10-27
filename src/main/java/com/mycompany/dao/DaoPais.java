@@ -2,27 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompanydao;
+package com.mycompany.dao;
 
-import com.my.companyferramentas.BancoDeDadosMySql;
+import com.mycompany.ferramentas.BancoDeDadosMySql;
 import java.sql.ResultSet;
 
 /**
  *
  * @author rosa.3950
  */
-public class DaoCategoria extends BancoDeDadosMySql{
-    private String sql; 
+public class DaoPais extends BancoDeDadosMySql {
+       private String sql; 
     
-    public Boolean inserir(int id, String nome, String descricao){
+    public Boolean inserir(int id, String nome){
         try{
-            sql = "INSERT INTO CATEGORIA (ID, NOME, DESCRICAO) VALUES (?, ?, ?)";
+            sql = "INSERT INTO PAIS (ID, NOME) VALUES (?, ?)";
             
             setStatement(getConexao().prepareStatement(sql));
             
             getStatement().setInt(1, id);
             getStatement().setString(2, nome);
-            getStatement().setString(3, descricao);
             
             getStatement().executeUpdate();
             
@@ -33,15 +32,14 @@ public class DaoCategoria extends BancoDeDadosMySql{
         }
     }
     
-    public Boolean alterar(int id, String novoNome, String novaDescricao){
+    public Boolean alterar(int id, String novoNome){
         try{
-            sql = "UPDATE CATEGORIA SET NOME = ?, DESCRICAO = ? WHERE ID = ?";
+            sql = "UPDATE PAIS SET NOME = ? WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
-            getStatement().setInt(3, id);
+            getStatement().setInt(2, id);
             getStatement().setString(1, novoNome);
-            getStatement().setString(2, novaDescricao);
             
             getStatement().executeUpdate();
             
@@ -54,7 +52,7 @@ public class DaoCategoria extends BancoDeDadosMySql{
     
     public Boolean excluir(int id){
         try{
-            sql = "DELETE FROM CATEGORIA WHERE ID = ?";
+            sql = "DELETE FROM PAIS WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -71,7 +69,7 @@ public class DaoCategoria extends BancoDeDadosMySql{
     
     public ResultSet listarTodos(){
         try{
-            sql = "SELECT ID, NOME, IFNULL(DESCRICAO, '') FROM CATEGORIA";
+            sql = "SELECT ID, NOME FROM PAIS";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -85,7 +83,7 @@ public class DaoCategoria extends BancoDeDadosMySql{
     
     public ResultSet listarPorId(int id){
         try{
-            sql = "SELECT ID, NOME, IFNULL(DESCRICAO, '') FROM CATEGORIA WHERE ID = ?";
+            sql = "SELECT ID, NOME FROM PAIS WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -101,7 +99,7 @@ public class DaoCategoria extends BancoDeDadosMySql{
     
     public ResultSet listarPorNome(String nome){
         try{
-            sql = "SELECT ID, NOME, IFNULL(DESCRICAO, '') FROM CATEGORIA WHERE NOME LIKE ?";
+            sql = "SELECT ID, NOME FROM PAIS WHERE NOME LIKE ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -115,27 +113,11 @@ public class DaoCategoria extends BancoDeDadosMySql{
         return getResultado();
     }
     
-    public ResultSet listarPorDescricao(String descricao){
-        try{
-            sql = "SELECT ID, NOME, IFNULL(DESCRICAO, '') FROM CATEGORIA WHERE DESCRICAO LIKE ?";
-            
-            setStatement(getConexao().prepareStatement(sql));
-            
-            getStatement().setString(1, descricao + "%");
-            
-            setResultado(getStatement().executeQuery());
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-        
-        return getResultado();
-    }
-    
     public int buscarProximoId(){
         int id = 0;
         
         try{
-            sql = "SELECT IFNULL(MAX(ID), 0) + 1 FROM CATEGORIA";
+            sql = "SELECT IFNULL(MAX(ID), 0) + 1 FROM PAIS";
             
             setStatement(getConexao().prepareStatement(sql));
             
